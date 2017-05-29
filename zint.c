@@ -188,11 +188,12 @@ PHP_FUNCTION(zint_barcode_file)
 						strcpy(barcode->errtxt, "error: given value for primary is invalid");
 						error_code = 1;
 					}
-				} else if (strcmp(key, "text") == 0) {
-					if (Z_TYPE(temp) == IS_STRING && Z_STRLEN(temp) > 0) {
-						strcpy(barcode->text, Z_STRVAL(temp));
+				} else if (strcmp(key, "notext") == 0) {
+					if (Z_TYPE(temp) == IS_LONG && (Z_LVAL(temp) == 0 || Z_LVAL(temp) == 1)) {
+						// show human readable text
+						barcode->show_hrt = Z_LVAL(temp);
 					} else {
-						strcpy(barcode->errtxt, "error: given value for text is invalid");
+						strcpy(barcode->errtxt, "error: given value for notext is invalid");
 						error_code = 1;
 					}
 				}
